@@ -1,0 +1,22 @@
+package test;
+
+import data.DataHelper;
+import org.junit.jupiter.api.Test;
+import page.AuthPage;
+
+import static com.codeborne.selenide.Selenide.open;
+
+public class TestSQL {
+
+    @Test
+    void successfulAuthTest() {
+        var loginPage = open("http://185.119.57.9:9999", AuthPage.class);
+        var authLogin = DataHelper.getAuthInfo();
+        var authPassword = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authLogin, authPassword);
+        var verificationCode = DataHelper.getVerificationCode();
+        var cardPage = verificationPage.validVerify(verificationCode);
+    }
+
+
+}
