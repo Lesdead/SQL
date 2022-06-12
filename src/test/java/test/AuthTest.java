@@ -6,7 +6,7 @@ import page.AuthPage;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public class TestSQL {
+public class AuthTest {
 
     @Test
     void successfulAuthTest() {
@@ -17,6 +17,4 @@ public class TestSQL {
         var verificationCode = DataHelper.getVerificationCode();
         var cardPage = verificationPage.validVerify(verificationCode);
     }
-
-
 }
