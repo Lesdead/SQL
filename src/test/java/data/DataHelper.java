@@ -1,5 +1,6 @@
 package data;
 
+import lombok.SneakyThrows;
 import lombok.Value;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -13,9 +14,11 @@ public class DataHelper {
     private DataHelper() {
     }
 
+    private static QueryRunner runner = new QueryRunner();
+
     private static Connection getConn() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://185.119.57.9:3306/app", "app", "pass");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "app", "pass");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,4 +52,14 @@ public class DataHelper {
         return new AuthInfo("vasya", "qwerty123");
     }
 
+    @SneakyThrows
+    public static void clearAll() {
+        var cardsClearSQL = "DELETE FROM cards";
+        var auth_codesClearSQL = "DELETE FROM auth_codes";
+        var usersClearSQL = "DELETE FROM users";
+
+        runner.update(getConn(), cardsClearSQL);
+        runner.update(getConn(), auth_codesClearSQL);
+        runner.update(getConn(), usersClearSQL);
+    }
 }
